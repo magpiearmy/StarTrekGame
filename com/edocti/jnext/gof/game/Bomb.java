@@ -1,5 +1,6 @@
 package com.edocti.jnext.gof.game;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -11,7 +12,7 @@ public class Bomb extends Projectile {
 	
 	public Bomb(StarTrek ref, Entity owner, int x, int y, int width, int height, Side side) {
 		super(ref, owner, x, y, width, height, 1, side);
-		this.damage = 1000;
+		this.damage = 250;
 	}
 	
 	public void update(long elapsed) {
@@ -25,10 +26,11 @@ public class Bomb extends Projectile {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(new Color(120, 190, 240));
+		g.setColor(new Color(70, 70, 70));
 		g.fillOval(x, y, w, h);
 		
 		g.setColor( flash ? Color.RED : Color.YELLOW );
+		g.setStroke(new BasicStroke(2));
 		g.drawOval(x, y, w, h);
 	}
 }

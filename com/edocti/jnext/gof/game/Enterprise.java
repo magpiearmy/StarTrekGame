@@ -23,7 +23,7 @@ public class Enterprise extends Entity {
 	
 	public void fire() {
 		if (timeSinceFire >= reloadTime) {
-			Projectile projectile = new Bullet(world, this, x+w, y + h/2, 30, 4, side);
+			Projectile projectile = new Bullet(world, this, x+w, y + h/2, 28, 5, side);
 			projectile.setSpeedX(400);
 			world.addEntity(projectile);
 			
