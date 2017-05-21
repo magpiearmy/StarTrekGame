@@ -139,6 +139,7 @@ public class StarTrek extends Canvas {
 		long currentTime;
 		long prevTime = System.nanoTime();
 		
+gameLoop:
 		while (gameRunning) {
 			
 			currentTime = System.nanoTime();					// nano-precision
@@ -152,10 +153,18 @@ public class StarTrek extends Canvas {
 				
 				// Remove any destroyed entities
 				for (int i = 0; i < entities.size(); ) {
-					if (!entities.get(i).isActive())
-						entities.remove(i);
-					else
+					if (!entities.get(i).isActive()) {
+						if (i == 0) { // Enterprise is dead
+							gameRunning = false;
+							break gameLoop;
+						}
+						else {
+							entities.remove(i);
+						}
+					}
+					else {
 						i++;
+					}
 				}
 				
 				for (Entity e : newEntities) {
@@ -196,13 +205,6 @@ public class StarTrek extends Canvas {
 				}
 				
 				if (lives <= 0) {
-					Font gameOverFont = new Font("Serif", Font.BOLD, 90);
-					FontMetrics metrics = g.getFontMetrics(gameOverFont);
-					g.setFont(gameOverFont);
-					String str = "Game Over";
-					g.drawString(str,
-							getWidth()/2 - metrics.stringWidth(str)/2,
-							getHeight()/2);
 					gameRunning = false;
 				}
 				
@@ -212,6 +214,17 @@ public class StarTrek extends Canvas {
 				prevTime = System.nanoTime();
 			}
 		}
+
+		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+		Font gameOverFont = new Font("Serif", Font.BOLD, 90);
+		FontMetrics metrics = g.getFontMetrics(gameOverFont);
+		g.setFont(gameOverFont);
+		String str = "Game Over";
+		g.setColor(Color.WHITE);
+		g.drawString(str, getWidth()/2 - metrics.stringWidth(str)/2, getHeight()/2);
+		g.dispose();
+		strategy.show();
+		
 		try {
 			Thread.sleep(2000);
 		}
