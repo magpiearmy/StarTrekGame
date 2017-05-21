@@ -1,5 +1,7 @@
 package com.edocti.jnext.gof.game;
 
+import java.awt.Point;
+
 public class ToughEnemyStrategy extends EnemyStrategy {
 
 	private long reloadTime = 5000; //ms
@@ -24,16 +26,22 @@ public class ToughEnemyStrategy extends EnemyStrategy {
 		
 		// Alternate between bullets and bombs
 		if (firedBulletLast) {
+			final int pw = 24;
+			final int ph = 24;
+			Point projectilePos = enemy.getProjectileSpawnPoint(pw, ph);
 			Projectile proj = new Bomb(enemy.getWorld(), enemy,
-					enemy.getX()-24, enemy.getY(), 24, 24,
+					projectilePos.x, projectilePos.y, pw, ph,
 					Side.ENEMY);
 			proj.setSpeedX(-90);
 			enemy.fire(proj);
 			firedBulletLast = false;
 		}
 		else {
+			final int pw = 15;
+			final int ph = 8;
+			Point projectilePos = enemy.getProjectileSpawnPoint(pw, ph);
 			Projectile proj = new Bullet(enemy.getWorld(), enemy,
-										enemy.getX(), enemy.getY(), 15, 8,
+										projectilePos.x, projectilePos.y, pw, ph,
 										Side.ENEMY);
 			proj.setSpeedX(-200);
 			enemy.fire(proj);

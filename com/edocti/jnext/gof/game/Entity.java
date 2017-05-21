@@ -88,4 +88,11 @@ public /*abstract*/ class Entity {
 	public int getY() {
 		return y;
 	}
+	public int getWidth() {
+		return w;
+	}
+	
+	public int getHeight() {
+		return h;
+	}
 }

@@ -2,6 +2,7 @@ package com.edocti.jnext.gof.game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class Enemy extends Entity {
 	
@@ -47,6 +48,10 @@ public class Enemy extends Entity {
 
 	public void fire(Projectile projectile) {
 		world.addEntity(projectile);
+	}
+	
+	public Point getProjectileSpawnPoint(int projectileWidth, int projectileHeight) {
+		return new Point(x - projectileWidth, (y+h/2)-projectileHeight/2);
 	}
 
 }
