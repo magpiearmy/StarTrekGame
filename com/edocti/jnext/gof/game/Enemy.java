@@ -26,18 +26,21 @@ public class Enemy extends Entity {
 	public void update(long elapsed) {
 		super.update(elapsed);
 		strategy.update(elapsed);
-		
-		// Check to see whether we passed the left edge of the screen
-		if (x + w < 0) {
+
+		if (hasEscaped()) {
 			world.addEscapedEntity(this);
 		}
+	}
+
+	public boolean hasEscaped() {
+		return (x + w) <= 0;
 	}
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
 		g.fillRect(x, y, w, h);
 
-		// Draw health bar
+		// Draw health bar just above
 		g.setColor(Color.GREEN);
 		int healthBarWidth = (int)(((float)health / (float)startingHealth) * w);
 		g.fillRect(x, y - 8, healthBarWidth, 4);

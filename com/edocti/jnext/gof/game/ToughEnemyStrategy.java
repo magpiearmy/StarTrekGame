@@ -33,8 +33,6 @@ public class ToughEnemyStrategy extends EnemyStrategy {
 					projectilePos.x, projectilePos.y, pw, ph,
 					Side.ENEMY);
 			proj.setSpeedX(-90);
-			enemy.fire(proj);
-			firedBulletLast = false;
 		}
 		else {
 			final int pw = 15;
@@ -44,9 +42,12 @@ public class ToughEnemyStrategy extends EnemyStrategy {
 										projectilePos.x, projectilePos.y, pw, ph,
 										Side.ENEMY);
 			proj.setSpeedX(-200);
-			enemy.fire(proj);
-			firedBulletLast = true;
 		}
+	}
+
+	private void fireProjectile(Projectile projectile) {
+		enemy.fire(projectile);
+		firedBulletLast = !firedBulletLast;
 	}
 
 }
