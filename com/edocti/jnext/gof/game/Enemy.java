@@ -1,13 +1,14 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
+import java.util.List;
 
 public class Enemy extends Entity {
 	
 	private int startingHealth;
 	private EnemyStrategy strategy = new BasicEnemyStrategy(this);
+
+	protected List<Turret> turrets;
 
 	public Enemy(StarTrek ref, int x, int y, int width, int height, int health) {
 		super(ref, x, y, width, height, health);
@@ -27,13 +28,13 @@ public class Enemy extends Entity {
 		super.update(elapsed);
 		strategy.update(elapsed);
 
-		if (hasEscaped()) {
-			world.addEscapedEntity(this);
-		}
+		checkEscape();
 	}
 
-	public boolean hasEscaped() {
-		return (x + w) <= 0;
+	private void checkEscape() {
+		if (x + w < 0) {
+			world.addEscapedEntity(this);
+		}
 	}
 
 	public void draw(Graphics2D g) {

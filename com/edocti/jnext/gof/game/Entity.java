@@ -1,8 +1,6 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public /*abstract*/ class Entity {
 	protected StarTrek world;

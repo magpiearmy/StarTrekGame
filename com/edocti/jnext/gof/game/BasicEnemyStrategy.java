@@ -9,7 +9,7 @@ public class BasicEnemyStrategy extends EnemyStrategy {
 
 	@Override
 	public void update(long elapsed) {
-		// Basic enemy does nothing...
+		// Basic enemy does nothing except move...
 	}
 
 }

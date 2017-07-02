@@ -1,7 +1,6 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 
 public class Sprite {
 	private Image image;

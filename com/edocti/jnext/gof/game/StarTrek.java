@@ -1,65 +1,14 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import com.edocti.jnext.gof.game.EnemyFactory.EnemyType;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.edocti.jnext.gof.game.EnemyFactory.EnemyType;
-
-class MyKeyListener implements KeyListener {
-	private StarTrek starTrek;
-	private boolean released = true;
-	
-	public MyKeyListener(StarTrek s) {
-		starTrek = s;
-	}
-	
-	@Override public void keyTyped(KeyEvent e) {
-	}
-
-	@Override public void keyPressed(KeyEvent e) {
-		Enterprise enterprise = (Enterprise)starTrek.getEnterprise();
-
-		if (released) {
-				
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_UP:
-				enterprise.setSpeedY(-400);
-				break;
-			case KeyEvent.VK_DOWN:
-				enterprise.setSpeedY(400);
-				break;
-			case KeyEvent.VK_SPACE:
-				enterprise.fire();
-			}
-		}
-	}
-
-	@Override public void keyReleased(KeyEvent e) {
-		Entity enterprise = starTrek.getEnterprise();
-
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-		case KeyEvent.VK_DOWN:
-			enterprise.setSpeedY(0);
-			released = true;
-			break;
-		}
-	}
-}
 
 public class StarTrek extends Canvas {
 	private static final long serialVersionUID = 1033091750611217336L;
@@ -71,6 +20,8 @@ public class StarTrek extends Canvas {
 	private List<Entity> newEntities;
 	private List<Entity> escapedEntities;
 	private int lives = 3;
+
+	private final Font gameOverFont = new Font("Serif", Font.BOLD, 90);
 
 	public StarTrek() {
 		JFrame container = new JFrame("Star Trek");
@@ -94,7 +45,7 @@ public class StarTrek extends Canvas {
 		});
 		
 		this.requestFocus();
-		this.addKeyListener(new MyKeyListener(this));
+		this.addKeyListener(new GameKeyListener(this));
 		this.createBufferStrategy(2);
 		this.strategy = this.getBufferStrategy();
 	}
@@ -138,8 +89,7 @@ public class StarTrek extends Canvas {
 	public void gameLoop() {
 		long currentTime;
 		long prevTime = System.nanoTime();
-		
-gameLoop:
+
 		while (gameRunning) {
 			
 			currentTime = System.nanoTime();					// nano-precision
@@ -147,90 +97,121 @@ gameLoop:
 			
 			if (elapsed >= 10) // Update every 10ms
 			{
-				Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-				g.setColor(Color.BLACK);
-				g.fillRect(0, 0, 1024, 768);
-				
-				// Remove any destroyed entities
-				for (int i = 0; i < entities.size(); ) {
-					if (!entities.get(i).isActive()) {
-						if (i == 0) { // Enterprise is dead
-							gameRunning = false;
-							break gameLoop;
-						}
-						else {
-							entities.remove(i);
-						}
-					}
-					else {
-						i++;
-					}
-				}
-				
-				for (Entity e : newEntities) {
-					entities.add(e);
-				}
-				newEntities.clear();
-				
-				// Update entities...
-				for (Entity e : entities) {
-					e.update(elapsed);
-				}
-				
-				// Draw entities...
-				for (Entity e : entities) {
-					e.draw(g);
-				}
-				
-				g.setFont(new Font("Consolas", 0, 20));
-				g.setColor(Color.WHITE);
-				g.drawString("LIVES: "+Integer.toString(lives), 10, this.getHeight() - 20);
-				
-				// Handle any new collisions
-				for (int i = 0; i < entities.size(); i++) {
-					for (int j = i + 1; j < entities.size(); j++) {
-						Entity e1 = entities.get(i);
-						Entity e2 = entities.get(j);
-						
-						if (e1.collidesWith(e2)) {
-							e1.hasCollided(e2);
-							e2.hasCollided(e1);
-						}
-					}
-				}
-				
-				for (Entity e : escapedEntities) {
-					if (entities.remove(e))
-						lives--;
-				}
-				
-				if (lives <= 0) {
-					gameRunning = false;
-				}
-				
-				g.dispose();  // draw complete => clear buffer
-				strategy.show();  // flip buffer
-				
+				doFrame(elapsed);
 				prevTime = System.nanoTime();
 			}
 		}
 
-		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-		Font gameOverFont = new Font("Serif", Font.BOLD, 90);
-		FontMetrics metrics = g.getFontMetrics(gameOverFont);
-		g.setFont(gameOverFont);
-		String str = "Game Over";
-		g.setColor(Color.WHITE);
-		g.drawString(str, getWidth()/2 - metrics.stringWidth(str)/2, getHeight()/2);
-		g.dispose();
-		strategy.show();
-		
+		drawGameOverMessage();
+
+		// Wait a short while before terminating
 		try {
 			Thread.sleep(2000);
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private void drawGameOverMessage() {
+		final String str = "Game Over";
+
+		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+		FontMetrics metrics = g.getFontMetrics(gameOverFont);
+
+		g.setFont(gameOverFont);
+		g.setColor(Color.WHITE);
+		g.drawString(str, getWidth()/2 - metrics.stringWidth(str)/2, getHeight()/2);
+
+		g.dispose();
+		strategy.show();
+	}
+
+	private void doFrame(long elapsed) {
+		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, 1024, 768);
+
+		removeDestroyedEntities();
+		addNewEntities();
+		updateEntities(elapsed);
+		handleCollisions();
+		drawEntities(g);
+		drawHud(g);
+
+		for (Entity e : escapedEntities) {
+			if (entities.remove(e))
+				lives--;
+		}
+
+		if (isEndOfGame()) {
+			gameRunning = false;
+		}
+
+		g.dispose();  // draw complete => clear buffer
+		strategy.show();  // flip buffer
+	}
+
+	private boolean isEndOfGame() {
+		if (lives <= 0) {
+			return true;
+		} else if (!entities.get(0).isActive()) {
+			return true;
+		}
+		return false;
+	}
+
+	private void updateEntities(long elapsed) {
+		for (Entity e : entities) {
+			e.update(elapsed);
+		}
+	}
+
+	private void drawEntities(Graphics2D g) {
+		for (Entity e : entities) {
+			e.draw(g);
+		}
+	}
+
+	private void drawHud(Graphics g) {
+		g.setFont(new Font("Consolas", 0, 20));
+		g.setColor(Color.WHITE);
+		g.drawString("LIVES: "+Integer.toString(lives), 10, this.getHeight() - 20);
+
+	}
+
+	private void handleCollisions() {
+		for (int i = 0; i < entities.size(); i++) {
+			for (int j = i + 1; j < entities.size(); j++) {
+				Entity e1 = entities.get(i);
+				Entity e2 = entities.get(j);
+
+				if (e1.collidesWith(e2)) {
+					e1.hasCollided(e2);
+					e2.hasCollided(e1);
+				}
+			}
+		}
+	}
+
+	private void addNewEntities() {
+		for (Entity e : newEntities) {
+			entities.add(e);
+		}
+		newEntities.clear();
+	}
+
+	private void removeDestroyedEntities() {
+		for (int i = 0; i < entities.size(); ) {
+			if (!entities.get(i).isActive()) {
+				if (i != 0) { // Don't remove enterprise; checked later
+					entities.remove(i);
+				}
+			}
+			else {
+				i++;
+			}
 		}
 	}
 	

@@ -1,7 +1,6 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class Bullet extends Projectile {
 	
@@ -14,5 +13,4 @@ public class Bullet extends Projectile {
 		g.setColor(new Color(225, 225, 80));
 		g.fillOval(x,  y, w, h);
 	}
-	
 }

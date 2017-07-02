@@ -1,7 +1,6 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 
 public class Enterprise extends Entity {

@@ -1,6 +1,6 @@
 package com.edocti.jnext.gof.game;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class ToughEnemyStrategy extends EnemyStrategy {
 

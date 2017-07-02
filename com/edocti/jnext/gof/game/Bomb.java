@@ -12,7 +12,7 @@ public class Bomb extends Projectile {
 	
 	public Bomb(StarTrek ref, Entity owner, int x, int y, int width, int height, Side side) {
 		super(ref, owner, x, y, width, height, 1, side);
-		this.damage = 250;
+		this.damage = 400;
 	}
 	
 	public void update(long elapsed) {
