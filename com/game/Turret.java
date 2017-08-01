@@ -23,7 +23,7 @@ public class Turret extends Entity {
     }
 
     private Entity buildBullet() {
-        Entity bullet = new Bullet(world, this, x+w, y+h/2, 30, 6, Side.PLAYER);
+        Entity bullet = new Bullet(world, this, pos.x+w, pos.y+h/2, 30, 6, Side.PLAYER);
         bullet.setSpeedX(400);
         return bullet;
     }

@@ -11,6 +11,6 @@ public class Bullet extends Projectile {
 	
 	public void draw(Graphics2D g) {
 		g.setColor(new Color(225, 225, 80));
-		g.fillOval(x,  y, w, h);
+		g.fillOval(pos.x, pos.y, w, h);
 	}
 }

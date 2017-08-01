@@ -3,10 +3,13 @@ package com.game;
 import java.awt.*;
 
 public /*abstract*/ class Entity {
+//    protected int x, y;
+    protected int w, h;  // w and h will disappear
+    protected Position pos;
+
 	protected StarTrek world;
 	
 	protected Sprite sprite;
-	protected int x, y, w, h;  // w and h will disappear
 	
 	protected double moveOverflowX, moveOverflowY;
 
@@ -21,10 +24,9 @@ public /*abstract*/ class Entity {
 	protected int health;
 
 	public Entity(StarTrek ref, int x, int y, int width, int height, int health) {
-		this.x = x;
-		this.y = y;
 		this.w = width;
 		this.h = height;
+		this.pos = new Position(x, y);
 		this.world = ref;
 		this.health = health;
 	}
@@ -45,8 +47,7 @@ public /*abstract*/ class Entity {
 		moveOverflowX += dx - (double)moveX;
 		moveOverflowY += dy - (double)moveY;
 		
-		x += moveX;
-		y += moveY;
+		pos.move(moveX, moveY);
 	}
 	
 	public void update(long elapsed) {
@@ -56,13 +57,13 @@ public /*abstract*/ class Entity {
 	public void draw(Graphics2D g) {
 		// sprite.draw(g)
 		g.setColor(Color.WHITE);
-		g.fillRect(x, y, w, h);
+		g.fillRect(pos.x, pos.y, w, h);
 		g.setColor(Color.BLACK);
 	}
 	
 	public boolean collidesWith(Entity other) {
-		Rectangle r1 = new Rectangle(x, y, w, h);
-		Rectangle r2 = new Rectangle(other.x, other.y, other.w, other.h);
+		Rectangle r1 = new Rectangle(pos.x, pos.y, w, h);
+		Rectangle r2 = new Rectangle(other.pos.x, other.pos.y, other.w, other.h);
 		return r1.intersects(r2);
 	}
 	
@@ -78,14 +79,15 @@ public /*abstract*/ class Entity {
 	public StarTrek getWorld() {
 		return world;
 	}
-	
+
 	public int getX() {
-		return x;
+		return pos.x;
 	}
-	
+
 	public int getY() {
-		return y;
+		return pos.y;
 	}
+
 	public int getWidth() {
 		return w;
 	}
@@ -93,4 +95,8 @@ public /*abstract*/ class Entity {
 	public int getHeight() {
 		return h;
 	}
+
+	protected Position getEdgePlacementPosition() {
+        return new Position(1, 2);
+    }
 }

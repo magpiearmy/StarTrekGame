@@ -27,10 +27,10 @@ public class Bomb extends Projectile {
 
 	public void draw(Graphics2D g) {
 		g.setColor(new Color(70, 70, 70));
-		g.fillOval(x, y, w, h);
+		g.fillOval(pos.x, pos.y, w, h);
 		
 		g.setColor( flash ? Color.RED : Color.YELLOW );
 		g.setStroke(new BasicStroke(2));
-		g.drawOval(x, y, w, h);
+		g.drawOval(pos.x, pos.y, w, h);
 	}
 }
