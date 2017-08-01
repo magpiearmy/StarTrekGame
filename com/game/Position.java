@@ -1,6 +1,6 @@
 package com.game;
 
-public class Position {
+public class Position { //testcomment
     public int x, y;
 
     public Position(int x, int y) {
