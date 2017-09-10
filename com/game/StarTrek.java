@@ -1,6 +1,7 @@
 package com.game;
 
 import com.game.EnemyFactory.EnemyType;
+import com.game.input.GameKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class StarTrek extends Canvas {
 	private List<Entity> newEntities;
 	private List<Entity> escapedEntities;
 	private int lives = 3;
+    private CommandQueue commandQueue = new CommandQueue();
 
 	private final Font gameOverFont = new Font("Serif", Font.BOLD, 90);
 
@@ -45,7 +47,7 @@ public class StarTrek extends Canvas {
 		});
 		
 		this.requestFocus();
-		this.addKeyListener(new GameKeyListener(this));
+		this.addKeyListener(new GameKeyListener(this, commandQueue));
 		this.createBufferStrategy(2);
 		this.strategy = this.getBufferStrategy();
 	}
