@@ -137,6 +137,7 @@ public class StarTrek extends Canvas {
 
 		removeDestroyedEntities();
 		addNewEntities();
+		processCommands();
 		updateEntities(elapsed);
 		handleCollisions();
 		drawEntities(g);
@@ -155,13 +156,15 @@ public class StarTrek extends Canvas {
 		strategy.show();  // flip buffer
 	}
 
-	private boolean isEndOfGame() {
-		if (lives <= 0) {
-			return true;
-		} else if (!entities.get(0).isActive()) {
-			return true;
+	private void processCommands() {
+		GameCommand command;
+		while ((command = commandQueue.getNextCommand()) != null) {
+			command.execute();
 		}
-		return false;
+	}
+
+	private boolean isEndOfGame() {
+		return lives <= 0 || !entities.get(0).isActive();
 	}
 
 	private void updateEntities(long elapsed) {

@@ -17,10 +17,10 @@ public class MoveCommand implements GameCommand {
     @Override
     public void execute() {
         switch(dir) {
-            case UP: entity.setSpeedY(-200); break;
-            case DOWN: entity.setSpeedY(200); break;
-            case LEFT: entity.setSpeedX(-200); break;
-            case RIGHT: entity.setSpeedX(200); break;
+            case UP: entity.setSpeedY(-400); break;
+            case DOWN: entity.setSpeedY(400); break;
+            case LEFT: entity.setSpeedX(-400); break;
+            case RIGHT: entity.setSpeedX(400); break;
         }
     }
 }
