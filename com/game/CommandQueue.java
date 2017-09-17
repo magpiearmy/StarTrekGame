@@ -11,12 +11,6 @@ public class CommandQueue {
     }
 
     public GameCommand getNextCommand() {
-        GameCommand command = null;
-        final int idx = queue.size() - 1;
-        if (idx > 0) {
-            command = queue.get(queue.size() - 1);
-            queue.remove(idx);
-        }
-        return command;
+        return queue.isEmpty() ? null : queue.remove(0);
     }
 }
