@@ -15,7 +15,7 @@ public class Enterprise extends Entity {
 	private List<Turret> turrets = new ArrayList<>();
 	
 	public Enterprise(StarTrek ref, int x, int y, int width, int height) {
-		super(ref, x, y, width, height, MAX_HEALTH);
+		super(x, y, width, height, MAX_HEALTH);
 		side = Side.PLAYER;
 		turrets.add(new Turret(world, pos.x+w, pos.y+h/2, 8, 12, 1, this));
 	}

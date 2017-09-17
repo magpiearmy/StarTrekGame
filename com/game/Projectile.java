@@ -6,7 +6,7 @@ public class Projectile extends Entity {
 	protected Entity owner;
 	
 	public Projectile(StarTrek ref, Entity owner, int x, int y, int width, int height, int health, Side side) {
-		super(ref, x, y, width, height, health);
+		super(x, y, width, height, health);
 		this.owner = owner;
 		this.side = side;
 	}

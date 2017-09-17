@@ -25,7 +25,13 @@ public class StarTrek extends Canvas {
 
 	private final Font gameOverFont = new Font("Serif", Font.BOLD, 90);
 
-	public StarTrek() {
+	private static final StarTrek instance = new StarTrek();
+
+	public static synchronized StarTrek getInstance() {
+		return instance;
+	}
+
+	private StarTrek() {
 		JFrame container = new JFrame("Star Trek");
 		JPanel panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(1024, 768));
@@ -221,7 +227,7 @@ public class StarTrek extends Canvas {
 	}
 	
 	public static void main(String argv[]) {
-		StarTrek game = new StarTrek();
+		StarTrek game = StarTrek.getInstance();
 		game.startGame();
 		game.gameLoop();
 		System.exit(0);
