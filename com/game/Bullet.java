@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Bullet extends Projectile {
 	
-	public Bullet(StarTrek ref, Entity owner, int x, int y, int width, int height, Side side) {
-		super(ref, owner, x, y, width, height, 1, side);
+	public Bullet(Entity owner, int x, int y, int width, int height, Side side) {
+		super(owner, x, y, width, height, 1, side);
 		this.damage = 50;
 	}
 	

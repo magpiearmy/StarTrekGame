@@ -14,10 +14,10 @@ public class Enterprise extends Entity {
 
 	private List<Turret> turrets = new ArrayList<>();
 	
-	public Enterprise(StarTrek ref, int x, int y, int width, int height) {
+	public Enterprise(int x, int y, int width, int height) {
 		super(x, y, width, height, MAX_HEALTH);
 		side = Side.PLAYER;
-		turrets.add(new Turret(world, pos.x+w, pos.y+h/2, 8, 12, 1, this));
+		turrets.add(new Turret(pos.x+w, pos.y+h/2, 8, 12, 1, this));
 	}
 
 	public void move(long delta) {

@@ -29,7 +29,7 @@ public class ToughEnemyStrategy extends EnemyStrategy {
 			final int pw = 24;
 			final int ph = 24;
 			Point projectilePos = enemy.getProjectileSpawnPoint(pw, ph);
-			Projectile proj = new Bomb(enemy.getWorld(), enemy,
+			Projectile proj = new Bomb(enemy,
 					projectilePos.x, projectilePos.y, pw, ph,
 					Side.ENEMY);
 			proj.setSpeedX(-90);
@@ -38,7 +38,7 @@ public class ToughEnemyStrategy extends EnemyStrategy {
 			final int pw = 15;
 			final int ph = 8;
 			Point projectilePos = enemy.getProjectileSpawnPoint(pw, ph);
-			Projectile proj = new Bullet(enemy.getWorld(), enemy,
+			Projectile proj = new Bullet(enemy,
 										projectilePos.x, projectilePos.y, pw, ph,
 										Side.ENEMY);
 			proj.setSpeedX(-200);

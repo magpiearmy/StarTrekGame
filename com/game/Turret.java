@@ -6,7 +6,7 @@ public class Turret extends Entity {
 
     private Enterprise owner;
 
-    public Turret(StarTrek ref, int x, int y, int width, int height, int health, Enterprise owner) {
+    public Turret(int x, int y, int width, int height, int health, Enterprise owner) {
         super(x, y, width, height, health);
         this.owner = owner;
         world.addEntity(this);
@@ -23,7 +23,7 @@ public class Turret extends Entity {
     }
 
     private Entity buildBullet() {
-        Entity bullet = new Bullet(world, this, pos.x+w, pos.y+h/2, 30, 6, Side.PLAYER);
+        Entity bullet = new Bullet(this, pos.x+w, pos.y+h/2, 30, 6, Side.PLAYER);
         bullet.setSpeedX(400);
         return bullet;
     }

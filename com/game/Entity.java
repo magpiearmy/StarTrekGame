@@ -7,7 +7,7 @@ public /*abstract*/ class Entity {
     protected int w, h;  // w and h will disappear
     protected Position pos;
 
-	protected StarTrek world;
+	protected World world;
 	
 	protected Sprite sprite;
 	
@@ -18,13 +18,13 @@ public /*abstract*/ class Entity {
 
 	/** vertical speed in px/sec */
 	protected int speedY;
-	
+
 	protected boolean isActive = true;
 	protected Side side = Side.NEUTRAL;
 	protected int health;
 
 	public Entity(int x, int y, int width, int height, int health) {
-		this.world = StarTrek.getInstance();
+		this.world = World.getInstance();
 		this.w = width;
 		this.h = height;
 		this.pos = new Position(x, y);
@@ -76,7 +76,7 @@ public /*abstract*/ class Entity {
 		if (health <= 0) destroy();
 	}
 	
-	public StarTrek getWorld() {
+	public World getWorld() {
 		return world;
 	}
 

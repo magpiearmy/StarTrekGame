@@ -55,7 +55,6 @@ public class World extends Canvas {
 		});
 		
 		this.requestFocus();
-		this.addKeyListener(new GameKeyListener(this, commandQueue));
 		this.createBufferStrategy(2);
 		this.strategy = this.getBufferStrategy();
 	}
@@ -66,11 +65,11 @@ public class World extends Canvas {
 		escapedEntities = new ArrayList<>();
 		
 		// Create our Enterprise ship and add to the collection
-		Entity enterprise = new Enterprise(this, 20, 300, 80, 120);
+		Entity enterprise = new Enterprise(20, 300, 80, 120);
 		entities.add(enterprise);
 		
 		// Create some enemies
-		EnemyFactory factory = new EnemyFactory(this);
+		EnemyFactory factory = new EnemyFactory();
 		entities.add(factory.createEnemy(EnemyType.WEAK_ENEMY, 1024, 350));
 		entities.add(factory.createEnemy(EnemyType.WEAK_ENEMY, 1024, 100));
 		entities.add(factory.createEnemy(EnemyType.WEAK_ENEMY, 1024, 600));
@@ -93,6 +92,7 @@ public class World extends Canvas {
 	
 	public void startGame() {
 		initEntities();
+		this.addKeyListener(new GameKeyListener(commandQueue));
 		gameRunning = true;
 	}
 	

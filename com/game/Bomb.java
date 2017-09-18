@@ -10,8 +10,8 @@ public class Bomb extends Projectile {
 	private long timeSinceFlash = 0;
 	private boolean flash = true;
 	
-	public Bomb(StarTrek ref, Entity owner, int x, int y, int width, int height, Side side) {
-		super(ref, owner, x, y, width, height, 1, side);
+	public Bomb(Entity owner, int x, int y, int width, int height, Side side) {
+		super(owner, x, y, width, height, 1, side);
 		this.damage = 400;
 	}
 	
