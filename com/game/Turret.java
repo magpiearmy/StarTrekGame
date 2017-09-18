@@ -7,7 +7,7 @@ public class Turret extends Entity {
     private Enterprise owner;
 
     public Turret(StarTrek ref, int x, int y, int width, int height, int health, Enterprise owner) {
-        super(ref, x, y, width, height, health);
+        super(x, y, width, height, health);
         this.owner = owner;
         world.addEntity(this);
     }

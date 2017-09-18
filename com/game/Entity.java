@@ -23,11 +23,11 @@ public /*abstract*/ class Entity {
 	protected Side side = Side.NEUTRAL;
 	protected int health;
 
-	public Entity(StarTrek ref, int x, int y, int width, int height, int health) {
+	public Entity(int x, int y, int width, int height, int health) {
+		this.world = StarTrek.getInstance();
 		this.w = width;
 		this.h = height;
 		this.pos = new Position(x, y);
-		this.world = ref;
 		this.health = health;
 	}
 

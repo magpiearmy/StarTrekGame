@@ -11,12 +11,12 @@ import java.awt.event.KeyListener;
 import static com.game.commands.MoveCommand.*;
 
 public class GameKeyListener implements KeyListener {
-    private StarTrek starTrek;
+    private World world;
     private CommandQueue queue;
     private boolean released = true;
 
-    public GameKeyListener(StarTrek s, CommandQueue queue) {
-        starTrek = s;
+    public GameKeyListener(CommandQueue queue) {
+        world = World.getInstance();
         this.queue = queue;
     }
 
@@ -26,7 +26,7 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Enterprise enterprise = (Enterprise) starTrek.getEnterprise();
+        Enterprise enterprise = (Enterprise) world.getEnterprise();
 
         if (released) {
 
@@ -46,7 +46,7 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Entity enterprise = starTrek.getEnterprise();
+        Entity enterprise = world.getEnterprise();
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:

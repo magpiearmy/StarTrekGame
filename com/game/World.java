@@ -13,7 +13,7 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StarTrek extends Canvas {
+public class World extends Canvas {
 	private static final long serialVersionUID = 1033091750611217336L;
 
 	/** This strategy allows the use of accelerated page flip */
@@ -27,7 +27,13 @@ public class StarTrek extends Canvas {
 
 	private final Font gameOverFont = new Font("Serif", Font.BOLD, 90);
 
-	public StarTrek() {
+	private static final World instance = new World();
+
+	public static synchronized World getInstance() {
+		return instance;
+	}
+
+	private World() {
 		JFrame container = new JFrame("Star Trek");
 		JPanel panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(1024, 768));
@@ -223,7 +229,7 @@ public class StarTrek extends Canvas {
 	}
 	
 	public static void main(String argv[]) {
-		StarTrek game = new StarTrek();
+		World game = World.getInstance();
 		game.startGame();
 		game.gameLoop();
 		System.exit(0);

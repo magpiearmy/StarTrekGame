@@ -11,7 +11,7 @@ public class Enemy extends Entity {
 	protected List<Turret> turrets;
 
 	public Enemy(StarTrek ref, int x, int y, int width, int height, int health) {
-		super(ref, x, y, width, height, health);
+		super(x, y, width, height, health);
 		this.startingHealth = health;
 		this.side = Side.ENEMY;
 	}
