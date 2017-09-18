@@ -1,4 +1,6 @@
-package com.game;
+package com.game.commands;
+
+import com.game.Entity;
 
 public class MoveCommand implements GameCommand {
 

@@ -1,11 +1,14 @@
 package com.game.input;
 
 import com.game.*;
+import com.game.commands.CommandQueue;
+import com.game.commands.FireCommand;
+import com.game.commands.MoveCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static com.game.MoveCommand.*;
+import static com.game.commands.MoveCommand.*;
 
 public class GameKeyListener implements KeyListener {
     private StarTrek starTrek;

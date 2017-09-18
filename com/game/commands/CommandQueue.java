@@ -1,4 +1,4 @@
-package com.game;
+package com.game.commands;
 
 import java.util.ArrayList;
 import java.util.List;
